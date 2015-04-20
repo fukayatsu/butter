@@ -167,6 +167,10 @@ class MainController < NSWindowController
         });
       })();
     CODE
+
+    sender.windowScriptObject.evaluateWebScript read_js_file('jquery-2.1.3.min')
+    sender.windowScriptObject.evaluateWebScript read_js_file('jquery.selection')
+    sender.windowScriptObject.evaluateWebScript read_js_file('esarea')
   end
 
   # called when window object is cleared
@@ -228,4 +232,11 @@ class MainController < NSWindowController
     locateTo info['url']
     center.removeDeliveredNotification notification
   end
+
+  private
+  def read_js_file(filename)
+    url = NSBundle.mainBundle.URLForResource("js/#{filename}", withExtension: "js")
+    NSString.stringWithContentsOfFile url
+  end
+
 end
